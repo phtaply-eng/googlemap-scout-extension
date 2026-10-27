@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f0ea">
+  <title>TapVinci Color Thief — Live Demo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%238FA89B'/%3E%3Cpath d='M16 7.2c-2.8 3.2-5.6 6.4-5.6 10.1a5.6 5.6 0 1 0 11.2 0c0-3.7-2.8-6.9-5.6-10.1Z' fill='%23FFFBF7'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="demo-page">
+  <div class="demo-shell">
+    <header class="demo-intro">
+      <span class="demo-kicker">Brave Extension · Manifest V3</span>
+      <h1 class="demo-title">Color, lifted.</h1>
+      <p class="demo-sub">Five dominant colors from any page, a smart dermatology palette, and copy-ready Tailwind or CSS.</p>
+    </header>
+
+    <div class="app">
+      <div class="ambient ambient-a" aria-hidden="true"></div>
+      <div class="ambient ambient-b" aria-hidden="true"></div>
+      <div class="ambient ambient-c" aria-hidden="true"></div>
+
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" role="img">
+              <defs>
+                <linearGradient id="brandGradient" x1="4" y1="2" x2="28" y2="30" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#8FA89B"></stop>
+                  <stop offset="1" stop-color="#C2A878"></stop>
+                </linearGradient>
+              </defs>
+              <rect width="32" height="32" rx="10" fill="url(#brandGradient)"></rect>
+              <path d="M16 7.2c-2.8 3.2-5.6 6.4-5.6 10.1a5.6 5.6 0 1 0 11.2 0c0-3.7-2.8-6.9-5.6-10.1Z" fill="#FFFBF7"></path>
+              <path d="M13.8 18.3c0 1.6 1.1 2.9 2.7 3.2" fill="none" stroke="#8FA89B" stroke-linecap="round" stroke-width="1.4" opacity=".7"></path>
+            </svg>
+          </div>
+          <div class="brand-copy">
+            <span class="brand-name">TapVinci</span>
+            <span class="brand-sub">Color Thief</span>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <button id="refreshBtn" class="icon-button" type="button" title="Scan the page again" aria-label="Scan the page again">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M15.7 6.3A6.5 6.5 0 1 0 16.4 12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path>
+              <path d="M16.1 3.8v3.6h-3.6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path>
+            </svg>
+          </button>
+          <button id="eyedropperBtn" class="icon-button accent" type="button" title="Pick a color with EyeDropper" aria-label="Pick a color with EyeDropper">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="m12.2 3.4 4.4 4.4M9.5 6.1l4.4 4.4M4.2 15.8l2.2-.4 8.4-8.4a1.9 1.9 0 0 0 0-2.7 1.9 1.9 0 0 0-2.7 0l-8.4 8.4-.4 2.2 2.2.1Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="page-line">
+          <span class="eyebrow">Palette from this page</span>
+          <span class="page-meta">
+            <span id="pageHost" class="host" title="Active page">—</span>
+            <span class="privacy" title="Processed on-device"><span class="privacy-dot" aria-hidden="true"></span></span>
+          </span>
+        </div>
+
+        <section id="palette" class="palette" aria-live="polite" aria-label="Extracted color palette">
+          <div class="color-row skeleton" aria-hidden="true">
+            <span class="dot skeleton-dot"></span>
+            <span class="skeleton-lines"><span></span><span></span></span>
+            <span class="skeleton-copy"></span>
+          </div>
+          <div class="color-row skeleton" aria-hidden="true">
+            <span class="dot skeleton-dot"></span>
+            <span class="skeleton-lines"><span></span><span></span></span>
+            <span class="skeleton-copy"></span>
+          </div>
+          <div class="color-row skeleton" aria-hidden="true">
+            <span class="dot skeleton-dot"></span>
+            <span class="skeleton-lines"><span></span><span></span></span>
+            <span class="skeleton-copy"></span>
+          </div>
+          <div class="color-row skeleton" aria-hidden="true">
+            <span class="dot skeleton-dot"></span>
+            <span class="skeleton-lines"><span></span><span></span></span>
+            <span class="skeleton-copy"></span>
+          </div>
+          <div class="color-row skeleton" aria-hidden="true">
+            <span class="dot skeleton-dot"></span>
+            <span class="skeleton-lines"><span></span><span></span></span>
+            <span class="skeleton-copy"></span>
+          </div>
+        </section>
+
+        <section id="emptyState" class="empty hidden" aria-live="polite">
+          <div class="empty-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <rect x="3.5" y="5" width="17" height="14" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+              <circle cx="9" cy="10" r="1.6" fill="currentColor"></circle>
+              <path d="m5.5 16.5 4.2-4.1 3 2.8 2.1-2 3.7 3.3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+            </svg>
+          </div>
+          <h2 id="emptyTitle">No images found</h2>
+          <p id="emptyBody">Try the eyedropper, or add images to the page and scan again.</p>
+          <button id="emptyPick" class="empty-pick" type="button" data-action="pick">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="m12.2 3.4 4.4 4.4M9.5 6.1l4.4 4.4M4.2 15.8l2.2-.4 8.4-8.4a1.9 1.9 0 0 0 0-2.7 1.9 1.9 0 0 0-2.7 0l-8.4 8.4-.4 2.2 2.2.1Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+            </svg>
+            Pick a color
+          </button>
+        </section>
+
+        <section id="suggestion" class="suggestion hidden" aria-live="polite">
+          <div class="suggestion-head">
+            <div class="suggestion-title">
+              <span class="smart-label"><span aria-hidden="true">✦</span> Smart match</span>
+              <h2>Premium Dermatology</h2>
+            </div>
+            <button id="copySuggestion" class="mini-copy" type="button" title="Copy dermatology palette" aria-label="Copy dermatology palette">Copy</button>
+          </div>
+          <div class="suggestion-row">
+            <p id="suggestionReason" class="suggestion-reason">Skin, sand &amp; sage notes detected.</p>
+            <div id="suggestionSwatches" class="suggestion-swatches"></div>
+          </div>
+        </section>
+
+        <div class="actions">
+          <button id="copyTailwind" class="action-button primary" type="button" disabled title="Copy as a Tailwind config">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M7.2 4.5 3.8 10l3.4 5.5M12.8 4.5 16.2 10l-3.4 5.5M11.2 3.8 8.8 16.2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"></path>
+            </svg>
+            <span>Copy Tailwind</span>
+          </button>
+          <button id="copyCss" class="action-button secondary" type="button" disabled title="Copy as CSS variables">
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M7.3 4.2c-1.8 0-2.7.9-2.7 2.7v1.2c0 1-.5 1.6-1.4 1.9.9.3 1.4.9 1.4 1.9v1.2c0 1.8.9 2.7 2.7 2.7M12.7 4.2c1.8 0 2.7.9 2.7 2.7v1.2c0 1 .5 1.6 1.4 1.9-.9.3-1.4.9-1.4 1.9v1.2c0 1.8-.9 2.7-2.7 2.7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+            </svg>
+            <span>Copy CSS vars</span>
+          </button>
+        </div>
+
+        <div class="status-line">
+          <p id="status" class="status" role="status" aria-live="polite">Scanning page…</p>
+          <span id="scanMeta" class="scan-meta">Reading images…</span>
+        </div>
+      </main>
+    </div>
+
+    <section class="demo-gallery" aria-label="Demo imagery">
+      <div class="demo-gallery-head">
+        <h2 class="demo-gallery-title">Demo imagery</h2>
+        <p class="demo-gallery-note">The panel scans these four images</p>
+      </div>
+      <div class="demo-grid">
+        <figure class="demo-card">
+          <img
+            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MjAiIGhlaWdodD0iMzAwIiB2aWV3Qm94PSIwIDAgNDIwIDMwMCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSI0MjAiIHkyPSIzMDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBzdG9wLWNvbG9yPSIjOEZBODlCIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjRkZGQkY3Ii8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjQyMCIgaGVpZ2h0PSIzMDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSIzMjAiIGN5PSI4MCIgcj0iOTUiIGZpbGw9IiNGRkZCRjciIG9wYWNpdHk9Ii4zNSIvPjxjaXJjbGUgY3g9IjkwIiBjeT0iMjUwIiByPSIxMjAiIGZpbGw9IiM0RjZBNUMiIG9wYWNpdHk9Ii4xOCIvPjwvc3ZnPg=="
+            alt="Sage and porcelain gradient"
+            width="420"
+            height="300">
+          <figcaption>Sage study <span>01</span></figcaption>
+        </figure>
+
+        <figure class="demo-card">
+          <img
+            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MjAiIGhlaWdodD0iMzAwIiB2aWV3Qm94PSIwIDAgNDIwIDMwMCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSI0MjAiIHkyPSIzMDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBzdG9wLWNvbG9yPSIjRDJBNjgwIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjRjVEQ0MyIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjQyMCIgaGVpZ2h0PSIzMDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSIzMDAiIGN5PSIxMDAiIHI9IjkwIiBmaWxsPSIjRkZGM0U2IiBvcGFjaXR5PSIuNCIvPjxwYXRoIGQ9Ik0wIDI1MGMxMDAtODAgMjIwLTgwIDQyMCAwdjUwSDB6IiBmaWxsPSIjQzJBODc4IiBvcGFjaXR5PSIuMjgiLz48L3N2Zz4="
+            alt="Warm skin and sand gradient"
+            width="420"
+            height="300">
+          <figcaption>Skin study <span>02</span></figcaption>
+        </figure>
+
+        <figure class="demo-card">
+          <img
+            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MjAiIGhlaWdodD0iMzAwIiB2aWV3Qm94PSIwIDAgNDIwIDMwMCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSI0MjAiIHkyPSIzMDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBzdG9wLWNvbG9yPSIjQzJBODc4Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjRkZGOEVDIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjQyMCIgaGVpZ2h0PSIzMDAiIGZpbGw9InVybCgjZykiLz48cGF0aCBkPSJNMCA4MGg0MjBNMCAxNTBoNDIwTTAgMjIwaDQyMCIgc3Ryb2tlPSIjOEZBODlCIiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9Ii4yNSIvPjxjaXJjbGUgY3g9IjEyMCIgY3k9IjkwIiByPSI1NCIgZmlsbD0iI0ZGRkJGNyIgb3BhY2l0eT0iLjQ1Ii8+PC9zdmc+"
+            alt="Sand and cream gradient with fine lines"
+            width="420"
+            height="300">
+          <figcaption>Sand study <span>03</span></figcaption>
+        </figure>
+
+        <figure class="demo-card">
+          <img
+            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MjAiIGhlaWdodD0iMzAwIiB2aWV3Qm94PSIwIDAgNDIwIDMwMCI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCIgeTE9IjAiIHgyPSI0MjAiIHkyPSIzMDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj48c3RvcCBzdG9wLWNvbG9yPSIjMjMyRDI3Ii8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjOEZBODlCIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjQyMCIgaGVpZ2h0PSIzMDAiIGZpbGw9InVybCgjZykiLz48Y2lyY2xlIGN4PSIzMTAiIGN5PSI5MCIgcj0iMTEwIiBmaWxsPSIjQzJBODc4IiBvcGFjaXR5PSIuNSIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjI0MCIgcj0iOTAiIGZpbGw9IiNGRkZCRjciIG9wYWNpdHk9Ii4xNiIvPjwvc3ZnPg=="
+            alt="Deep sage and warm sand gradient"
+            width="420"
+            height="300">
+          <figcaption>Night study <span>04</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <p class="demo-footer">On-device canvas extraction · EyeDropper ready</p>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="details.js"></script>
+</body>
+</html>

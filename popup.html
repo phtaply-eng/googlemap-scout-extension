@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taply Scout</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<div id="app">
+
+  <header id="topbar">
+    <div class="brand">
+      <div class="logo">T</div>
+      <div>
+        <div class="brandName">Taply Scout</div>
+        <div class="brandSub">TapVinci · NFC + Landing Pages</div>
+      </div>
+    </div>
+    <div class="topActions">
+      <button id="btnRefresh" class="iconBtn" title="Re-scrape this business" aria-label="Re-scrape">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+      </button>
+      <button id="btnTheme" class="iconBtn" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+    </div>
+  </header>
+
+  <div id="statusLine" class="status" hidden></div>
+
+  <div id="staleBar" class="stale" hidden>
+    ⏱ Last scrape · <span id="staleAge"></span> — press ⟳ for fresh data
+  </div>
+
+  <main id="content" hidden>
+    <section class="card hero">
+      <div id="avatar" class="avatar">A</div>
+      <div class="heroBody">
+        <h1 id="bizName" class="name">Business</h1>
+        <div class="metaRow">
+          <span id="bizBadge" class="badge">Category</span>
+          <span id="bizPill" class="pill">…</span>
+        </div>
+        <div id="starsRow" class="starsRow">
+          <span id="starGlyphs" class="glyphs">★★★★★</span>
+          <span id="starCount" class="count">—</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card themeRow">
+      <div class="dots" id="themeDots"><i></i><i></i><i></i></div>
+      <div class="themeText">
+        <div id="themeDetected" class="themeDetected">Detected: —</div>
+        <div id="themeName" class="themeName">Using — theme</div>
+      </div>
+    </section>
+
+    <section class="card fields">
+      <h2 class="cardTitle">Business Info</h2>
+      <dl id="fieldsList" class="fieldsList"></dl>
+      <div id="socialsRow" class="socialsRow" hidden></div>
+    </section>
+
+    <section class="card reviews">
+      <h2 class="cardTitle">Reviews <span id="reviewsMeta" class="muted"></span></h2>
+      <div id="reviewsList" class="reviewsList"></div>
+    </section>
+
+    <div class="group">
+      <div class="groupLabel">Group A — Export Data</div>
+      <div class="btnRow">
+        <button id="btnMd" class="btn export primary" disabled>
+          <span class="ic icMd"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></span>
+          <span class="btnText"><b>Export as MD</b><small>TapVinci scout file</small></span>
+        </button>
+        <button id="btnTxt" class="btn export" disabled>
+          <span class="ic icTxt"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg></span>
+          <span class="btnText"><b>Export as TXT</b><small>Plain text notes</small></span>
+        </button>
+      </div>
+
+      <div class="groupLabel">Group B — Copy Builder Prompts</div>
+      <div class="btnRow">
+        <button id="btnVscode" class="btn prompt vscode" disabled>
+          <span class="ic icVs"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m9 10-2 2 2 2"/><path d="m15 10 2 2-2 2"/></svg></span>
+          <span class="btnText"><b>Copy VS Code Prompt</b><small>Smart themed landing page</small></span>
+        </button>
+        <button id="btnOc" class="btn prompt oc" disabled>
+          <span class="ic icOc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m4 7 4 5-4 5"/><path d="M20 7l-4 5 4 5"/></svg></span>
+          <span class="btnText"><b>Copy OpenCode Prompt</b><small>Full project scaffold</small></span>
+        </button>
+      </div>
+      <div class="hint">Prompts carry the detected theme + reviews, so ChatGPT / Claude / Cursor / OpenCode builds colors that match the business.</div>
+    </div>
+
+    <footer class="foot">🔒 100% client-side — nothing leaves your browser • built by TapVinci 🇵🇭</footer>
+  </main>
+
+  <section id="empty" class="empty" hidden>
+    <div class="emptyArt">🗺️</div>
+    <h2 id="emptyTitle">Open a business on Google Maps first</h2>
+    <p id="emptyText">Search a place and click it so the left panel shows the business, then press the button below.</p>
+    <button id="btnRetry" class="btn retry">Get Info</button>
+    <ol class="steps">
+      <li>Open Google Maps and click a business</li>
+      <li>Click the Taply Scout icon</li>
+      <li>Export data or copy your smart prompt</li>
+    </ol>
+  </section>
+
+</div>
+
+<div id="toast" class="toast" hidden></div>
+
+<div id="modal" class="modal" hidden>
+  <div class="modalCard">
+    <div class="modalHead">
+      <div id="modalTitle" class="modalTitle">Preview</div>
+      <button id="btnModalClose" class="iconBtn" aria-label="Close">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+    <pre id="modalBody" class="modalBody"></pre>
+    <div class="modalActions">
+      <button id="btnModalCopy" class="btn mini">Copy</button>
+      <button id="btnModalDownload" class="btn mini primary">Download</button>
+    </div>
+  </div>
+</div>
+
+<script src="popup.js"></script>
+</body>
+</html>
